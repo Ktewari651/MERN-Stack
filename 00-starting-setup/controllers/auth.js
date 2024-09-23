@@ -16,7 +16,7 @@ exports.getLogin = async (req, res) => {
 
 exports.postLogin = async (req, res) => {
   try {
-    const user = await User.findById('66ee751c7d8d3143b471646c');
+     const user = await User.findById('66ee751c7d8d3143b471646c');
     if (!user) {
       throw new Error('User not found');
     }
