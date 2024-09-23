@@ -15,6 +15,6 @@ router.get('/signup', authControler.getSignup)
 
 router.post('/signup', authControler.postSignup)
 
-
+    
 module.exports = router
 

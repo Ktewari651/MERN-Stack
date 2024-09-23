@@ -4,7 +4,7 @@ const Order = require('../models/order');
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
-     // console.log("productsproducts",products, req.isLoggedIn);
+      console.log(products);
       res.render('shop/product-list', {
         prods: products,
         pageTitle: 'All Products',
@@ -18,7 +18,6 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-  // console.log("isLoggedIn1",req.isLoggedIn)
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(product => {
@@ -38,9 +37,7 @@ exports.getIndex = (req, res, next) => {
       res.render('shop/index', {
         prods: products,
         pageTitle: 'Shop',
-        path: '/',
-        // isAuthenticated: req.session.isLoggedIn,
-        // csrfToken : req.csrfToken()
+        path: '/'
       });
     })
     .catch(err => {
@@ -49,7 +46,6 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
- 
   req.user
     .populate('cart.items.productId')
     .execPopulate()
@@ -67,7 +63,6 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
-  console.log(prodId)
   Product.findById(prodId)
     .then(product => {
       return req.user.addToCart(product);
@@ -98,7 +93,7 @@ exports.postOrder = (req, res, next) => {
       });
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user
         },
         products: products
@@ -115,9 +110,7 @@ exports.postOrder = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-
-  // console.log("Orders1",req.user)
-  Order.find({ 'user.userId': req.session.user._id })
+  Order.find({ 'user.userId': req.user._id })
     .then(orders => {
       res.render('shop/orders', {
         path: '/orders',

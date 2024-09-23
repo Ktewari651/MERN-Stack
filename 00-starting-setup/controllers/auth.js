@@ -2,12 +2,12 @@ const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 
 exports.getLogin = async (req, res) => {
-  // const isLoggedIn =  req.get('Cookie').split(';')[2].trim().split('=')[1]
   console.log("1req.session.isLoggedIn", req.session.isLoggedIn)
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
-    isAuthenticated: false
+    isAuthenticated: false,
+    // csrfToken : req.csrfToken()
 
   }
   )
